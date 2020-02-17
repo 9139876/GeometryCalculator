@@ -9,7 +9,7 @@ namespace ConvexFlatFigureCalculator
     public partial class ResultWindow : Form
     {
         const int Clearance = 20;
-        readonly Font font = new Font(FontFamily.GenericMonospace, 10);
+        readonly Font font = new Font(FontFamily.GenericMonospace, 15, FontStyle.Bold);
 
         public ResultWindow()
         {
@@ -30,7 +30,7 @@ namespace ConvexFlatFigureCalculator
             int ySizeShape = points.Max(p => p.P.Y) - points.Min(p => p.P.Y);
 
             float k = Math.Min((float)xSizeBox / xSizeShape, (float)ySizeBox / ySizeShape);
-            
+
             Bitmap bmp = new Bitmap(ShapeBox.Width, ShapeBox.Height);
 
             using (Graphics g = Graphics.FromImage(bmp))
@@ -38,11 +38,12 @@ namespace ConvexFlatFigureCalculator
                 g.Clear(Color.White);
                 Pen pen = new Pen(Color.Orange, 2);
 
-                foreach(var pair in Calculator.Instance.Pairs)
-                {
+                //За 2 прохода, чтобы буквы не перекрывались
+                foreach (var pair in Calculator.Instance.Pairs)
                     g.DrawLine(pen, Clearance + (pair.P1.P.X) * k, Clearance + (pair.P1.P.Y) * k, Clearance + (pair.P2.P.X) * k, Clearance + (pair.P2.P.Y) * k);
+
+                foreach (var pair in Calculator.Instance.Pairs)
                     g.DrawString(pair.P1.Ch.ToString(), font, new SolidBrush(Color.Black), new Point((int)(pair.P1.P.X * k + Clearance), (int)(pair.P1.P.Y * k + Clearance)));
-                }
             }
 
             ShapeBox.Image = bmp;
@@ -69,7 +70,7 @@ namespace ConvexFlatFigureCalculator
                 new StringBuilder($"Расчетная площадь {squareCalced * k * k / 100} соток\r\n") :
                 new StringBuilder($"Расчетная площадь {squareCalced * k * k } м2\r\n");
 
-            foreach(var p in Calculator.Instance.Pairs)
+            foreach (var p in Calculator.Instance.Pairs)
             {
                 sb.AppendLine($"{p.String} = {p.Vector * k} м");
             }
