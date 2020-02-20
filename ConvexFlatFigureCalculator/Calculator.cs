@@ -71,7 +71,7 @@ namespace ConvexFlatFigureCalculator
 
             Pairs.Add(new Pair(Points.Last(), Points.First()));
 
-            Center = new PointWChar(new Point(Points.Max(p => p.P.X) - Points.Min(p => p.P.X), Points.Max(p => p.P.Y) - Points.Min(p => p.P.Y)), 'O');
+            Center = new PointWChar(new Point((Points.Max(p => p.P.X) - Points.Min(p => p.P.X)) / 2, (Points.Max(p => p.P.Y) - Points.Min(p => p.P.Y)) / 2), 'O');
         }
 
         public double ShapeSquareCalc()
@@ -83,7 +83,7 @@ namespace ConvexFlatFigureCalculator
         {
             return 0.5 * Math.Abs((p1.X - p3.X) * (p2.Y - p3.Y) - (p2.X - p3.X) * (p1.Y - p3.Y));
         }
-        
+
         static Calculator calculator;
         public static Calculator Instance
         {
