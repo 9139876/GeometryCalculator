@@ -65,8 +65,8 @@
             this.Name = "TransparentWindow";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TransparentWindow_FormClosing);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TransparentWindow_MouseClick);
-            this.Resize += new System.EventHandler(this.TransparentWindow_Resize);
+            this.VisibleChanged += new System.EventHandler(this.TransparentWindow_VisibleChanged);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TransparentWindow_MouseClick);            
             this.СontextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -21,14 +21,14 @@ namespace ConvexFlatFigureCalculator
             this.TransparencyKey = this.BackColor;
 
             //Сворачиваем
-            WindowState = FormWindowState.Minimized;
+            this.Visible = false;
 
             // Делаем невидимой иконку в трее
             NotifyIcon.Visible = false;
-            
+
             // Прячем окно из панели
             this.ShowInTaskbar = false;
-            
+
             // Делаем иконку в трее активной
             NotifyIcon.Visible = true;
 
@@ -36,19 +36,19 @@ namespace ConvexFlatFigureCalculator
 
         private void HotKey_HotKeyPressed(object sender, KeyEventArgs e)
         {
-            WindowState = WindowState == FormWindowState.Normal ? FormWindowState.Minimized : FormWindowState.Normal;
+            this.Visible = !this.Visible;
         }
 
         private void TransparentWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             hotKey?.Dispose();
         }
-        
+
         readonly List<Point> points = new List<Point>();
 
-        private void TransparentWindow_Resize(object sender, EventArgs e)
+        private void TransparentWindow_VisibleChanged(object sender, EventArgs e)
         {
-            if (WindowState == FormWindowState.Normal)
+            if (this.Visible)
             {
                 hotKey?.Dispose();
                 hotKey = new HotKey
@@ -89,6 +89,7 @@ namespace ConvexFlatFigureCalculator
                 {
                     Calculator.Instance.SetPoints(points);
                     new ResultWindow().ShowDialog();
+                    this.Visible = false;
                 }
 
                 points.Clear();
